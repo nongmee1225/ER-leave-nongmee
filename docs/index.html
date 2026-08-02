@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#1b2a4a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ER.ใบลา nongmee">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>ER.ใบลา nongmee</title>
+  <link rel="manifest" href="./manifest.webmanifest?v=4">
+  <link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-180.png?v=4">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png?v=4">
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #f7f6f1;
+      font-family: Tahoma, "Noto Sans Thai", Arial, sans-serif;
+    }
+    .app-frame {
+      display: block;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      border: 0;
+      background: #f7f6f1;
+    }
+    .loading {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #f7f6f1;
+      color: #1b2a4a;
+      font-size: 16px;
+      text-align: center;
+    }
+    .loading[hidden] { display: none; }
+    .loading-content {
+      display: grid;
+      justify-items: center;
+      gap: 14px;
+    }
+    .loading-icon {
+      width: 88px;
+      height: 88px;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(27, 42, 74, 0.18);
+    }
+    .loading-text {
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .android-browser-fallback {
+      position: fixed;
+      right: 12px;
+      bottom: max(12px, env(safe-area-inset-bottom));
+      z-index: 20;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 12px;
+      border: 1px solid #cfc8b7;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #1b2a4a;
+      box-shadow: 0 6px 20px rgba(27, 42, 74, 0.16);
+      font: 700 13px Tahoma, "Noto Sans Thai", Arial, sans-serif;
+      text-decoration: none;
+    }
+    .android-browser-fallback[hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <div id="loading" class="loading" role="status">
+    <div class="loading-content">
+      <img class="loading-icon" src="./icons/icon-192.png?v=5" alt="">
+      <div class="loading-text">กำลังเปิดระบบลา...</div>
+    </div>
+  </div>
+  <iframe
+    id="appFrame"
+    class="app-frame"
+    title="ER.ใบลา nongmee"
+    src="about:blank"
+    allow="clipboard-read; clipboard-write"
+  ></iframe>
+  <a
+    id="androidBrowserFallback"
+    class="android-browser-fallback"
+    href="#"
+    target="_top"
+    hidden
+  >เข้าไม่ได้? เปิดผ่าน Chrome ↗</a>
+
+  <script>
+    // ใส่ลิงก์ Web App ชุดใหม่หลังจากดีพลอย Apps Script แล้วเท่านั้น
+    const APP_URL = 'https://script.google.com/macros/s/AKfycbzX-fcEs75VhW0IKQ65FuHWsPDmboNqM-Cn1pNZgj7ZdRsHwRXQhf8YxVvCz_vgKe0m/exec';
+    const frame = document.getElementById('appFrame');
+    const loading = document.getElementById('loading');
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+      || window.navigator.standalone === true;
+    const androidBrowserFallback = document.getElementById('androidBrowserFallback');
+
+    if (APP_URL) {
+      frame.src = APP_URL;
+      androidBrowserFallback.href = APP_URL;
+    } else {
+      document.querySelector('.loading-text').textContent = 'ระบบใหม่กำลังตั้งค่า';
+    }
+
+    // Keep the app-like frame by default and expose a reliable account-login fallback.
+    if (isAndroid && isStandalone) androidBrowserFallback.hidden = false;
+
+    frame.addEventListener('load', () => {
+      loading.hidden = true;
+    });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js?v=5').catch(() => {});
+    }
+  </script>
+</body>
+</html>
