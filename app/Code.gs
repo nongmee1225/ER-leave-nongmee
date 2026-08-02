@@ -378,7 +378,7 @@ function ensureSettingsDefaults_() {
     ['AnnouncementUpdatedAt', ''], ['OrganizationName', ''], ['OrganizationAddress', ''],
     ['DepartmentName', ''], ['DivisionName', ''],
     ['DocumentLocation', ''], ['DocumentRecipient', 'ผู้อำนวยการ'],
-    ['DirectorFooter', 'ผู้อำนวยการ'], ['DefaultFiscalYearBE', ''],
+    ['DirectorFooter', 'ผู้อำนวยการโรงพยาบาลขุนตาล'], ['DefaultFiscalYearBE', ''],
     ['ReminderHour', 7], ['LeaveFormFontFamily', 'Sarabun'], ['LeaveFormFontSizePt', 12.5],
     ['LeaveFormMarginTopMm', 20], ['LeaveFormMarginRightMm', 20], ['LeaveFormMarginBottomMm', 15],
     ['LeaveFormMarginLeftMm', 25], ['LeaveFormSignatureHeightMm', 18],
@@ -809,7 +809,8 @@ function getDocumentSettings_() {
     organizationName: s.OrganizationName || '', organizationAddress: s.OrganizationAddress || '',
     departmentName: s.DepartmentName || '', divisionName: s.DivisionName || '',
     documentLocation: s.DocumentLocation || s.OrganizationName || '',
-    documentRecipient: s.DocumentRecipient || 'ผู้อำนวยการ', directorFooter: s.DirectorFooter || 'ผู้อำนวยการ',
+    documentRecipient: s.DocumentRecipient || 'ผู้อำนวยการ',
+    directorFooter: (!s.DirectorFooter || s.DirectorFooter === 'ผู้อำนวยการ') ? 'ผู้อำนวยการโรงพยาบาลขุนตาล' : s.DirectorFooter,
     fontFamily: s.LeaveFormFontFamily || 'Sarabun', fontSizePt: Number(s.LeaveFormFontSizePt) || 12.5,
     marginTopMm: Number(s.LeaveFormMarginTopMm) || 20, marginRightMm: Number(s.LeaveFormMarginRightMm) || 20,
     marginBottomMm: Number(s.LeaveFormMarginBottomMm) || 15, marginLeftMm: Number(s.LeaveFormMarginLeftMm) || 25,
@@ -1074,6 +1075,41 @@ function getLeaveQuotaTable_() {
   _quotaMemoryCache = rows;
   return _quotaMemoryCache;
 }
+
+function importHolidayRows(rows, pin) {
+  const lock = acquireWriteLock_();
+  if (!lock) return { success: false, message: 'ระบบกำลังบันทึกข้อมูลจากผู้ใช้อื่น กรุณารอสักครู่แล้วลองใหม่' };
+  try {
+    if (!checkPin(pin, 'admin')) return { success: false, message: 'PIN ไม่ถูกต้อง' };
+    if (!Array.isArray(rows) || !rows.length) return { success: false, message: 'ไม่มีรายการวันหยุดให้นำเข้า' };
+    if (rows.length > 1000) return { success: false, message: 'นำเข้าได้ครั้งละไม่เกิน 1,000 รายการ' };
+    const sheet = getSheetByName('Holidays');
+    const data = sheet.getDataRange().getValues();
+    const existing = new Set();
+    for (let i = 1; i < data.length; i++) {
+      let d = data[i][0];
+      if (Object.prototype.toString.call(d) === '[object Date]') d = Utilities.formatDate(d, SYSTEM_TIMEZONE, 'yyyy-MM-dd');
+      existing.add(String(d));
+    }
+    const accepted = [], rejected = [], seen = new Set();
+    rows.forEach((row, index) => {
+      const date = String(row && row.date || '').trim();
+      const name = String(row && row.name || '').trim();
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !name) { rejected.push(index + 1); return; }
+      const parsed = new Date(date + 'T00:00:00');
+      if (isNaN(parsed.getTime()) || Utilities.formatDate(parsed, SYSTEM_TIMEZONE, 'yyyy-MM-dd') !== date) { rejected.push(index + 1); return; }
+      if (existing.has(date) || seen.has(date)) return;
+      seen.add(date); accepted.push([date, name]);
+    });
+    if (accepted.length) sheet.getRange(sheet.getLastRow() + 1, 1, accepted.length, 2).setValues(accepted);
+    clearHolidayCache_();
+    const duplicateCount = rows.length - accepted.length - rejected.length;
+    return {
+      success: true, added: accepted.length, duplicateCount: duplicateCount, rejectedCount: rejected.length,
+      message: 'นำเข้าสำเร็จ ' + accepted.length + ' รายการ' + (duplicateCount ? ' · ข้ามวันที่ซ้ำ ' + duplicateCount + ' รายการ' : '') + (rejected.length ? ' · ข้ามข้อมูลไม่สมบูรณ์ ' + rejected.length + ' รายการ' : '')
+    };
+  } finally { lock.releaseLock(); }
+}
 function clearQuotaCache_() {
   _quotaMemoryCache = null;
   CacheService.getScriptCache().remove('quota_cache');
@@ -1221,7 +1257,8 @@ function getSystemCenterSettings(pin) {
   return { success: true, settings: {
     organizationName: s.OrganizationName || '', organizationAddress: s.OrganizationAddress || '',
     departmentName: s.DepartmentName || '', divisionName: s.DivisionName || '',
-    documentLocation: s.DocumentLocation || '', documentRecipient: s.DocumentRecipient || '', directorFooter: s.DirectorFooter || '',
+    documentLocation: s.DocumentLocation || '', documentRecipient: s.DocumentRecipient || '',
+    directorFooter: (!s.DirectorFooter || s.DirectorFooter === 'ผู้อำนวยการ') ? 'ผู้อำนวยการโรงพยาบาลขุนตาล' : s.DirectorFooter,
     defaultFiscalYearBE: s.DefaultFiscalYearBE || getCurrentFiscalYearBE_(), reminderHour: Number(s.ReminderHour) || 7,
     reminderDaysBefore: Number(s.ReminderDaysBefore) || 0, fontFamily: s.LeaveFormFontFamily || 'Sarabun',
     fontSizePt: Number(s.LeaveFormFontSizePt) || 12.5, marginTopMm: Number(s.LeaveFormMarginTopMm) || 20,

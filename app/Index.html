@@ -207,6 +207,25 @@
     .modal { background: white; border-radius: 4px; padding: 22px; width: 100%; max-width: 340px; border-top: 4px solid var(--brass); }
     .modal h3 { margin: 0 0 14px; font-family: 'Noto Sans Thai', sans-serif; font-size: 15px; color: var(--ink); }
     .modal input { width: 100%; margin-bottom: 14px; }
+    .pin-input-wrap { position: relative; width: 100%; min-width: 0; }
+    .pin-input-wrap > input { padding-right: 46px !important; }
+    .pin-visibility-btn {
+      position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
+      width: 36px !important; min-width: 36px !important; height: 34px; min-height: 34px;
+      padding: 0 !important; margin: 0 !important; border: 0; border-radius: 4px;
+      background: transparent; color: var(--muted); box-shadow: none;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 18px; line-height: 1; cursor: pointer;
+    }
+    .pin-visibility-btn:hover, .pin-visibility-btn:focus-visible { background: #F1EDE4; color: var(--ink); }
+    .pin-visibility-btn[aria-pressed="true"] { color: var(--brass-dark); }
+    .pin-eye-icon { width: 20px; height: 20px; display: block; }
+    .pin-eye-icon * { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .pin-eye-closed { display: none; }
+    .pin-visibility-btn[aria-pressed="true"] .pin-eye-open { display: none; }
+    .pin-visibility-btn[aria-pressed="true"] .pin-eye-closed { display: inline; }
+    .modal .pin-input-wrap { margin-bottom: 14px; }
+    .modal .pin-input-wrap > input { margin-bottom: 0; }
     .share-modal { max-width: 520px; }
     .share-message-preview { width: 100%; min-height: 220px; margin: 0 0 14px; resize: vertical; font-size: 14px; line-height: 1.65; }
     .share-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
@@ -318,6 +337,11 @@
     .leave-html-line.line-write { width: 48mm; }
     .line-xs { width: 28px; } .line-sm { width: 50px; } .line-md { width: 105px; } .line-month { width: 72px; }
     .line-lg { width: 155px; } .line-xl { width: 205px; } .line-xxl { width: 330px; } .line-name { width: 205px; } .line-position { width: 178px; } .line-address { width: 315px; }
+    .leave-html-work-row {
+      display: grid; grid-template-columns: max-content minmax(0, 48mm) max-content minmax(0, 31mm) max-content minmax(0, 1fr);
+      column-gap: 5px; align-items: baseline; min-height: 20.8pt;
+    }
+    .leave-html-work-row > .leave-html-line { width: 100%; min-width: 0; overflow: hidden; }
     .line-address-wide { width: 560px; text-align: left; } .line-address-mid { width: 420px; text-align: left; } .line-phone { width: 150px; } .line-sign-name { width: 210px; } .line-sign-position { width: 250px; }
     .line-supervisor-sign { width: 255px; } .line-supervisor-name { width: 210px; } .line-supervisor-position { width: 250px; } .line-order-sign { width: 185px; }
     .line-fill { flex: 1 1 auto; width: auto; min-width: 42px; }
@@ -417,19 +441,20 @@
       width: 100%; min-width: 0; overflow: hidden;
     }
     .compact-layout .leave-html-work-row {
-      display: grid; grid-template-columns: 8mm 31mm 16mm 48mm 11mm minmax(0, 1fr);
-      column-gap: 1.5mm; align-items: end;
+      display: grid; grid-template-columns: 8mm 48mm 16mm 31mm 11mm minmax(0, 1fr);
+      column-gap: 1.5mm; align-items: end; min-height: 20.8pt;
     }
     .compact-layout.leave-html-form-vacation .leave-html-entitlement-row {
       margin-top: 4px;
     }
     .compact-layout .leave-html-date-range-row {
-      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 29mm;
-      column-gap: 2mm; align-items: baseline;
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 24mm;
+      column-gap: 2.5mm; align-items: baseline;
     }
     .compact-layout.leave-html-form-vacation .leave-html-date-range-row {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 27mm;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 24mm;
     }
+    .compact-layout .leave-html-last-leave-row { font-size: 11.8pt; }
     .compact-layout .leave-html-date-range-row > .leave-html-keep:last-child { text-align: right; }
     .compact-layout.leave-html-form-sick .leave-html-stat-table th,
     .compact-layout.leave-html-form-sick .leave-html-stat-table td { width: 25%; }
@@ -445,6 +470,13 @@
     }
     .holiday-add-row .form-field { min-width: 0; width: 100%; overflow: hidden; }
     .holiday-add-row button { width: 86px; min-height: 42px; }
+    .holiday-import-box { margin-top: 18px; padding: 14px; border: 1px dashed var(--line); border-radius: 6px; background: #FBFAF7; }
+    .holiday-import-actions { display: flex; gap: 8px; align-items: end; flex-wrap: wrap; }
+    .holiday-import-actions .form-field { flex: 1 1 320px; }
+    .holiday-import-preview { margin-top: 12px; display: grid; gap: 7px; }
+    .holiday-import-row { display: grid; grid-template-columns: minmax(145px, .65fr) minmax(220px, 1.7fr) 44px; gap: 8px; align-items: center; }
+    .holiday-import-row input { margin: 0; }
+    .holiday-import-progress { margin-top: 10px; color: var(--forest); font-weight: 600; }
     .profile-history-row {
       display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(110px, 0.7fr);
       gap: 12px; margin-bottom: 12px;
@@ -544,6 +576,10 @@
       .tab-label-mobile { display: inline; }
       .register-foot { padding: 6px 14px 7px; overflow-x: auto; }
       .leave-rights-row { width: max-content; min-width: 100%; }
+      .holiday-import-row { grid-template-columns: minmax(0, 1fr) 44px; }
+      .holiday-import-row input[type="date"] { grid-column: 1 / 2; }
+      .holiday-import-row input[type="text"] { grid-column: 1 / 2; }
+      .holiday-import-row button { grid-column: 2; grid-row: 1 / 3; height: 100%; }
     }
     @media (min-width: 641px) and (max-width: 900px) {
       .summary-filter-card {
@@ -955,8 +991,8 @@
       </div>
       <div class="row form-row" style="margin-bottom:10px">
         <div class="form-field full"><label>PIN ส่วนตัว (4 หลัก)</label>
-        <input type="text" id="newStaffPin" placeholder="เช่น 1234" style="width:100%" inputmode="numeric"
-          onkeydown="if(event.key==='Enter'){event.preventDefault();openPinModal('addStaff');}"></div>
+          <div class="pin-input-wrap"><input type="password" id="newStaffPin" placeholder="เช่น 1234" style="width:100%" inputmode="numeric" autocomplete="new-password"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();openPinModal('addStaff');}"><button type="button" class="pin-visibility-btn" aria-label="แสดงรหัส PIN" aria-pressed="false" onclick="togglePinVisibility('newStaffPin',this)"><svg class="pin-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="pin-eye-open"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.8"/></g><g class="pin-eye-closed"><path d="M3 3l18 18M10.6 5.7c.5-.1.9-.2 1.4-.2 6.5 0 10 6.5 10 6.5a18 18 0 0 1-3 3.8M6.2 6.2C3.5 8 2 12 2 12s3.5 6.5 10 6.5c1.4 0 2.6-.3 3.7-.7"/></g></svg></button></div></div>
       </div>
       <div class="row form-row" style="margin-bottom:10px">
         <div class="form-field full"><label>ตำแหน่ง (สำหรับใบลา)</label>
@@ -1010,6 +1046,19 @@
         <div class="form-field"><label>ชื่อวันหยุด</label>
           <input type="text" id="newHolidayName" placeholder="เช่น วันสงกรานต์" style="width:100%"></div>
         <button onclick="openPinModal('addHoliday')">เพิ่ม</button>
+      </div>
+      <div class="holiday-import-box">
+        <div class="section-divider" style="margin-top:0">นำเข้าวันหยุดหลายรายการ</div>
+        <div class="hint" style="margin-bottom:10px">รองรับ Excel, CSV และรูปภาพ (JPG/PNG/WebP) · ระบบจะแสดงรายการให้ตรวจแก้ก่อนบันทึกจริง</div>
+        <div class="holiday-import-actions">
+          <div class="form-field"><label>เลือกไฟล์รายการวันหยุด</label><input type="file" id="holidayImportFile" accept=".xlsx,.xls,.csv,text/csv,image/png,image/jpeg,image/webp"></div>
+          <button type="button" class="secondary" id="btnReadHolidayFile" onclick="readHolidayImportFile(this)" style="width:auto">อ่านไฟล์</button>
+        </div>
+        <div id="holidayImportProgress" class="holiday-import-progress" aria-live="polite"></div>
+        <div id="holidayImportPreview" class="holiday-import-preview"></div>
+        <div class="row action-row" style="justify-content:flex-end;margin-top:10px">
+          <button type="button" id="btnConfirmHolidayImport" onclick="prepareHolidayBulkImport()" disabled>ยืนยันนำเข้ารายการที่ตรวจแล้ว</button>
+        </div>
       </div>
     </div>
 
@@ -1156,8 +1205,8 @@
     <div class="modal">
       <h3 id="pinModalTitle">กรุณาใส่ PIN</h3>
       <div id="pinModalDescription" class="confirmation-detail" style="display:none"></div>
-      <input type="password" id="pinInput" placeholder="PIN" inputmode="numeric" autocomplete="off"
-        onkeydown="if(event.key==='Enter'){event.preventDefault();confirmPin();}else if(event.key==='Escape'){closePinModal();}">
+      <div class="pin-input-wrap"><input type="password" id="pinInput" placeholder="PIN" inputmode="numeric" autocomplete="off"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();confirmPin();}else if(event.key==='Escape'){closePinModal();}"><button type="button" class="pin-visibility-btn" aria-label="แสดงรหัส PIN" aria-pressed="false" onclick="togglePinVisibility('pinInput',this)"><svg class="pin-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="pin-eye-open"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.8"/></g><g class="pin-eye-closed"><path d="M3 3l18 18M10.6 5.7c.5-.1.9-.2 1.4-.2 6.5 0 10 6.5 10 6.5a18 18 0 0 1-3 3.8M6.2 6.2C3.5 8 2 12 2 12s3.5 6.5 10 6.5c1.4 0 2.6-.3 3.7-.7"/></g></svg></button></div>
       <div class="row action-row confirm-actions" style="justify-content:flex-end">
         <button id="pinConfirmBtn" onclick="confirmPin()">ยืนยัน</button>
         <button class="secondary" onclick="closePinModal()">ยกเลิก</button>
@@ -2241,7 +2290,7 @@
           approverImageHtml +
           '<div>(' + escapeHtml(approverName) + ')</div>' +
           '<div>' + escapeHtml(approverPosition) + '</div>' +
-          '<div>' + escapeHtml((documentSettings && documentSettings.directorFooter) || 'ผู้อำนวยการ') + '</div>' +
+          '<div>' + escapeHtml(normalizeDirectorFooter_((documentSettings && documentSettings.directorFooter) || '')) + '</div>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -2273,7 +2322,7 @@
       '<div class="leave-html-row"><b>เรียน</b>&nbsp;&nbsp;' + escapeHtml(d.documentRecipient || 'ผู้อำนวยการ') + '</div>' +
       '<div class="leave-html-flow-row leave-html-indent leave-html-identity-row"><span>ข้าพเจ้า</span>' + formLine(s.name || '', 'line-name') +
         '<span>ตำแหน่ง</span>' + formFill(s.position || '') + '</div>' +
-      '<div class="leave-html-flow-row leave-html-work-row"><span>งาน</span>' + formLine(d.departmentName || '', 'line-md') + '<span>กลุ่มงาน</span>' + formLine(d.divisionName || '', 'line-xl') + '<span>สังกัด</span>' + formFill(d.organizationName || '') + '</div>' +
+      '<div class="leave-html-flow-row leave-html-work-row"><span>งาน</span>' + formLine(d.departmentName || '', 'leave-html-work-department') + '<span>กลุ่มงาน</span>' + formLine(d.divisionName || '', 'leave-html-work-division') + '<span>สังกัด</span>' + formFill(d.organizationName || '') + '</div>' +
       '<div class="leave-html-row">ขอลา&nbsp;&nbsp;<span class="leave-html-check-grid">' +
         '<span class="leave-html-check-option">' + formBox(r.leaveType === LEAVE_SICK) + '<span>ป่วย</span></span><span></span>' +
         '<span class="leave-html-check-option">' + formBox(r.leaveType === LEAVE_PERSONAL) + '<span>กิจส่วนตัว</span></span><span class="leave-html-reason-row">เนื่องจาก' + formFill(r.reason || '', 'left') + '</span>' +
@@ -2310,7 +2359,7 @@
       '<div class="leave-html-row"><b>เรียน</b>&nbsp;&nbsp;' + escapeHtml(d.documentRecipient || 'ผู้อำนวยการ') + '</div>' +
       '<div class="leave-html-flow-row leave-html-indent leave-html-identity-row"><span>ข้าพเจ้า</span>' + formLine(s.name || '', 'line-name') +
         '<span>ตำแหน่ง</span>' + formFill(s.position || '') + '</div>' +
-      '<div class="leave-html-flow-row leave-html-work-row"><span>งาน</span>' + formLine(d.departmentName || '', 'line-md') + '<span>กลุ่มงาน</span>' + formLine(d.divisionName || '', 'line-xl') + '<span>สังกัด</span>' + formFill(d.organizationName || '') + '</div>' +
+      '<div class="leave-html-flow-row leave-html-work-row"><span>งาน</span>' + formLine(d.departmentName || '', 'leave-html-work-department') + '<span>กลุ่มงาน</span>' + formLine(d.divisionName || '', 'leave-html-work-division') + '<span>สังกัด</span>' + formFill(d.organizationName || '') + '</div>' +
       '<div class="leave-html-flow-row leave-html-entitlement-row">มีวันลาพักผ่อนสะสม' + formLine(carryDays, 'line-sm') + '<span class="leave-html-keep">วันทำการ</span> มีสิทธิลาพักผ่อนประจำปีนี้อีก 10 วันทำการ รวมเป็น' + formLine(totalVacationDays, 'line-sm') + '<span class="leave-html-keep">วันทำการ</span></div>' +
       '<div class="leave-html-flow-row leave-html-date-range-row">' +
         '<span class="leave-html-keep">ตั้งแต่วันที่ ' + formLine(r.startDateText || '', 'line-lg') + '</span>' +
@@ -2657,7 +2706,7 @@
           : '<div class="staff-sign-preview">ยังไม่มีรูปลายเซ็นของเจ้าหน้าที่คนนี้</div>') +
         '<div style="font-size:10.5px;color:var(--muted);margin-top:6px">ตั้ง PIN ส่วนตัวใหม่ (เว้นว่าง = ไม่เปลี่ยน):</div>' +
         '<div class="row" style="margin-top:2px">' +
-          '<input type="text" id="pinsel-' + s.id + '" placeholder="เช่น 1234" style="font-size:12px;padding:5px 8px;flex:1" inputmode="numeric">' +
+          '<div class="pin-input-wrap" style="flex:1"><input type="password" id="pinsel-' + s.id + '" placeholder="เช่น 1234" style="font-size:12px;padding:5px 46px 5px 8px" inputmode="numeric" autocomplete="new-password"><button type="button" class="pin-visibility-btn" aria-label="แสดงรหัส PIN" aria-pressed="false" onclick="togglePinVisibility(\'pinsel-' + s.id + '\',this)"><svg class="pin-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="pin-eye-open"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.8"/></g><g class="pin-eye-closed"><path d="M3 3l18 18M10.6 5.7c.5-.1.9-.2 1.4-.2 6.5 0 10 6.5 10 6.5a18 18 0 0 1-3 3.8M6.2 6.2C3.5 8 2 12 2 12s3.5 6.5 10 6.5c1.4 0 2.6-.3 3.7-.7"/></g></svg></button></div>' +
           '<button class="secondary" style="font-size:12px;padding:5px 10px;width:auto" onclick="saveStaffInfo(this,\'' + s.id + '\')">บันทึก</button>' +
         '</div>' +
       '</div>';
@@ -2731,6 +2780,136 @@
   let pendingDeleteHolidayDate = null;
   function openDeleteHolidayModal(dateStr) { pendingDeleteHolidayDate = dateStr; openPinModal('deleteHoliday'); }
 
+  let pendingHolidayImportRows = [];
+  const THAI_MONTHS_ = {
+    'มกราคม':1,'ม.ค.':1,'มค':1,'กุมภาพันธ์':2,'ก.พ.':2,'กพ':2,'มีนาคม':3,'มี.ค.':3,'มีค':3,
+    'เมษายน':4,'เม.ย.':4,'เมย':4,'พฤษภาคม':5,'พ.ค.':5,'พค':5,'มิถุนายน':6,'มิ.ย.':6,'มิย':6,
+    'กรกฎาคม':7,'ก.ค.':7,'กค':7,'สิงหาคม':8,'ส.ค.':8,'สค':8,'กันยายน':9,'ก.ย.':9,'กย':9,
+    'ตุลาคม':10,'ต.ค.':10,'ตค':10,'พฤศจิกายน':11,'พ.ย.':11,'พย':11,'ธันวาคม':12,'ธ.ค.':12,'ธค':12
+  };
+
+  function loadExternalScriptOnce_(url, globalName) {
+    if (window[globalName]) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-library="' + globalName + '"]');
+      if (existing) { existing.addEventListener('load', resolve, { once:true }); existing.addEventListener('error', reject, { once:true }); return; }
+      const script = document.createElement('script');
+      script.src = url; script.async = true; script.dataset.library = globalName;
+      script.onload = resolve; script.onerror = () => reject(new Error('โหลดเครื่องมืออ่านไฟล์ไม่สำเร็จ'));
+      document.head.appendChild(script);
+    });
+  }
+
+  function thaiDigitsToArabic_(value) {
+    return String(value == null ? '' : value).replace(/[๐-๙]/g, ch => '๐๑๒๓๔๕๖๗๘๙'.indexOf(ch));
+  }
+
+  function holidayIsoDate_(day, month, year) {
+    day = Number(day); month = Number(month); year = Number(year);
+    if (year > 2400) year -= 543;
+    const test = new Date(Date.UTC(year, month - 1, day));
+    if (!year || test.getUTCFullYear() !== year || test.getUTCMonth() !== month - 1 || test.getUTCDate() !== day) return '';
+    return String(year).padStart(4,'0') + '-' + String(month).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+  }
+
+  function parseFlexibleHolidayDate_(value, fallbackYear) {
+    const text = thaiDigitsToArabic_(value).trim().replace(/\s+/g, ' ');
+    let m = text.match(/\b(20\d{2}|25\d{2})[-\/.](\d{1,2})[-\/.](\d{1,2})\b/);
+    if (m) return holidayIsoDate_(m[3], m[2], m[1]);
+    m = text.match(/\b(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2,4})\b/);
+    if (m) { let y = Number(m[3]); if (y < 100) y += y > 50 ? 2500 : 2000; return holidayIsoDate_(m[1], m[2], y); }
+    const monthPattern = Object.keys(THAI_MONTHS_).sort((a,b) => b.length-a.length).map(x => x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|');
+    m = text.match(new RegExp('(\\d{1,2})\\s*(' + monthPattern + ')(?:\\s*(?:พ\\.?ศ\\.?|ค\\.?ศ\\.?)?\\s*(\\d{2,4}))?', 'i'));
+    if (m) return holidayIsoDate_(m[1], THAI_MONTHS_[m[2]], m[3] || fallbackYear);
+    return '';
+  }
+
+  function cleanHolidayName_(text, dateText) {
+    let name = thaiDigitsToArabic_(text).replace(dateText || '', ' ').replace(/^(วัน|วันที่)\s*/,'').replace(/\s+/g,' ').trim();
+    name = name.replace(/^(จันทร์|อังคาร|พุธ|พฤหัสบดี|ศุกร์|เสาร์|อาทิตย์)\s*/,'').trim();
+    return name || 'วันหยุดราชการ';
+  }
+
+  function parseHolidayText_(text) {
+    const fallbackYear = Number(document.getElementById('holidayYearPicker').value) || new Date().getFullYear();
+    const rows = [];
+    thaiDigitsToArabic_(text).split(/\r?\n/).map(x => x.trim()).filter(Boolean).forEach(line => {
+      const iso = parseFlexibleHolidayDate_(line, fallbackYear);
+      if (!iso) return;
+      const datePart = line.match(/(20\d{2}|25\d{2})[-\/.]\d{1,2}[-\/.]\d{1,2}|\d{1,2}[-\/.]\d{1,2}[-\/.]\d{2,4}|\d{1,2}\s*[^\d\s]+(?:\s*[^\d\s]+)?\s*(?:พ\.?ศ\.?|ค\.?ศ\.?)?\s*\d{0,4}/);
+      rows.push({ date: iso, name: cleanHolidayName_(line, datePart ? datePart[0] : '') });
+    });
+    return rows;
+  }
+
+  function parseHolidayWorkbook_(workbook) {
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const matrix = XLSX.utils.sheet_to_json(sheet, { header:1, raw:false, defval:'' });
+    const fallbackYear = Number(document.getElementById('holidayYearPicker').value) || new Date().getFullYear();
+    const rows = [];
+    matrix.forEach(row => {
+      const cells = row.map(v => String(v || '').trim()).filter(Boolean);
+      let date = '', dateIndex = -1;
+      cells.some((cell, i) => { date = parseFlexibleHolidayDate_(cell, fallbackYear); if (date) dateIndex = i; return !!date; });
+      if (!date) return;
+      const name = cells.filter((_, i) => i !== dateIndex).join(' ').replace(/^(ชื่อวันหยุด|วันหยุด|รายการ)\s*/,'').trim();
+      rows.push({ date, name: name || 'วันหยุดราชการ' });
+    });
+    return rows;
+  }
+
+  function normalizeHolidayImportRows_(rows) {
+    const seen = new Set();
+    return rows.filter(row => row.date && row.name && !seen.has(row.date) && seen.add(row.date)).sort((a,b) => a.date.localeCompare(b.date));
+  }
+
+  async function readHolidayImportFile(btnEl) {
+    const input = document.getElementById('holidayImportFile');
+    const file = input.files && input.files[0];
+    if (!file) { showToast('กรุณาเลือกไฟล์ก่อน'); return; }
+    const progress = document.getElementById('holidayImportProgress');
+    setLoading(btnEl, true, 'กำลังอ่าน...'); progress.textContent = 'กำลังอ่านไฟล์...';
+    try {
+      let rows = [];
+      if (file.type.startsWith('image/')) {
+        await loadExternalScriptOnce_('https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js', 'Tesseract');
+        const result = await Tesseract.recognize(file, 'tha+eng', { logger: info => {
+          if (info.status === 'recognizing text') progress.textContent = 'กำลังอ่านข้อความจากภาพ ' + Math.round((info.progress || 0) * 100) + '%';
+        }});
+        rows = parseHolidayText_(result.data.text || '');
+      } else {
+        await loadExternalScriptOnce_('https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js', 'XLSX');
+        const data = await file.arrayBuffer();
+        rows = parseHolidayWorkbook_(XLSX.read(data, { type:'array' }));
+      }
+      pendingHolidayImportRows = normalizeHolidayImportRows_(rows);
+      progress.textContent = pendingHolidayImportRows.length ? 'อ่านได้ ' + pendingHolidayImportRows.length + ' รายการ กรุณาตรวจสอบก่อนยืนยัน' : 'ไม่พบวันที่ในไฟล์ กรุณาใช้ไฟล์ที่เห็นวันที่และชื่อวันหยุดชัดเจน';
+      renderHolidayImportPreview_();
+    } catch (err) {
+      progress.textContent = 'อ่านไฟล์ไม่สำเร็จ: ' + (err.message || err);
+      pendingHolidayImportRows = []; renderHolidayImportPreview_();
+    } finally { setLoading(btnEl, false); }
+  }
+
+  function renderHolidayImportPreview_() {
+    const area = document.getElementById('holidayImportPreview');
+    const confirmBtn = document.getElementById('btnConfirmHolidayImport');
+    confirmBtn.disabled = !pendingHolidayImportRows.length;
+    area.innerHTML = pendingHolidayImportRows.map((row, i) =>
+      '<div class="holiday-import-row"><input type="date" value="' + escapeHtml(row.date) + '" onchange="updateHolidayImportRow_(' + i + ',\'date\',this.value)">' +
+      '<input type="text" value="' + escapeHtml(row.name) + '" aria-label="ชื่อวันหยุด" onchange="updateHolidayImportRow_(' + i + ',\'name\',this.value)">' +
+      '<button type="button" class="danger" aria-label="ลบรายการ" style="width:44px;padding:5px" onclick="removeHolidayImportRow_(' + i + ')">×</button></div>'
+    ).join('');
+  }
+
+  function updateHolidayImportRow_(index, field, value) { if (pendingHolidayImportRows[index]) pendingHolidayImportRows[index][field] = value; }
+  function removeHolidayImportRow_(index) { pendingHolidayImportRows.splice(index, 1); renderHolidayImportPreview_(); }
+  function prepareHolidayBulkImport() {
+    pendingHolidayImportRows = normalizeHolidayImportRows_(pendingHolidayImportRows.map(r => ({ date:String(r.date||'').trim(), name:String(r.name||'').trim() })));
+    if (!pendingHolidayImportRows.length) { showToast('ไม่มีรายการพร้อมนำเข้า'); return; }
+    openPinModal('importHolidays');
+  }
+
   function systemCenterPayload_() {
     return {
       organizationName: document.getElementById('sysOrganizationName').value, organizationAddress: document.getElementById('sysOrganizationAddress').value,
@@ -2753,6 +2932,21 @@
   }
 
   // ===== PIN Modal =====
+  function togglePinVisibility(inputId, button) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    const reveal = input.type === 'password';
+    input.type = reveal ? 'text' : 'password';
+    button.setAttribute('aria-pressed', String(reveal));
+    button.setAttribute('aria-label', reveal ? 'ซ่อนรหัส PIN' : 'แสดงรหัส PIN');
+    input.focus({ preventScroll: true });
+  }
+
+  function normalizeDirectorFooter_(value) {
+    const text = String(value || '').trim();
+    return !text || text === 'ผู้อำนวยการ' ? 'ผู้อำนวยการโรงพยาบาลขุนตาล' : text;
+  }
+
   function openPinModal(action) {
     if (action === 'record' && !validateRecordForm_()) return;
     if (action === 'addStaff' && !validateNewStaff_()) return;
@@ -2774,6 +2968,7 @@
       deleteRecord: 'ใส่ PIN แอดมิน เพื่อลบรายการลานี้',
       editRecord: 'ใส่ PIN แอดมิน เพื่อบันทึกการแก้ไข',
       addHoliday: 'ใส่ PIN แอดมิน เพื่อเพิ่มวันหยุด',
+      importHolidays: 'ใส่ PIN แอดมิน เพื่อยืนยันนำเข้าวันหยุดทั้งหมด',
       deleteHoliday: 'ใส่ PIN แอดมิน เพื่อลบวันหยุด',
 
       checkTrigger: 'ใส่ PIN แอดมิน เพื่อเช็คสถานะการแจ้งเตือนอัตโนมัติ',
@@ -2792,6 +2987,9 @@
     };
     document.getElementById('pinModalTitle').textContent = titles[action] || 'กรุณาใส่ PIN';
     document.getElementById('pinInput').value = '';
+    document.getElementById('pinInput').type = 'password';
+    const pinToggle = document.querySelector('#pinModal .pin-visibility-btn');
+    if (pinToggle) { pinToggle.setAttribute('aria-pressed', 'false'); pinToggle.setAttribute('aria-label', 'แสดงรหัส PIN'); }
     clearFieldError_('pinInput');
     const description = document.getElementById('pinModalDescription');
     description.style.display = action === 'deleteRecord' ? 'block' : 'none';
@@ -3124,6 +3322,17 @@
         setLoading(confirmBtn, false); closePinModal(); showToast(res.message);
         if (res.success) { document.getElementById('newHolidayDate').value=''; document.getElementById('newHolidayName').value=''; loadHolidays(); }
       }).withFailureHandler(err => { setLoading(confirmBtn, false); onServerError(err); }).addHoliday(date, name, pin);
+
+    } else if (pendingAction === 'importHolidays') {
+      google.script.run.withSuccessHandler(res => {
+        setLoading(confirmBtn, false); closePinModal(); showToast(res.message);
+        if (res.success) {
+          pendingHolidayImportRows = []; renderHolidayImportPreview_();
+          document.getElementById('holidayImportFile').value = '';
+          document.getElementById('holidayImportProgress').textContent = res.message;
+          loadHolidays();
+        }
+      }).withFailureHandler(err => { setLoading(confirmBtn, false); onServerError(err); }).importHolidayRows(pendingHolidayImportRows, pin);
 
     } else if (pendingAction === 'deleteHoliday') {
       google.script.run.withSuccessHandler(res => {
