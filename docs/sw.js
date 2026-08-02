@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bear-staff-leave-launcher-v1';
+const CACHE_NAME = 'er-leave-nongmee-launcher-v2';
 const SHELL = [
   './',
   './index.html',
