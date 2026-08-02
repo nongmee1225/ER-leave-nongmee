@@ -655,6 +655,21 @@
       .leave-html-order { margin-top: 40px; }
       .leave-html-director { margin-top: 8px; font-size: 12.5pt; }
     }
+
+    .app-footer {
+      width: calc(100% - 32px);
+      max-width: 1180px;
+      margin: 24px auto 0;
+      padding: 16px 12px calc(18px + env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(27, 42, 74, 0.12);
+      color: #6B7280;
+      font-size: 12px;
+      line-height: 1.5;
+      letter-spacing: 0.02em;
+      text-align: center;
+    }
+
+    .app-footer small { font: inherit; }
   </style>
 </head>
 <body>
@@ -1083,6 +1098,10 @@
   </div>
 
   </div>
+
+  <footer class="app-footer" role="contentinfo">
+    <small>พัฒนาโดย กภ.ภัทรลักษณ์ อิ่นคำ &copy; 2026</small>
+  </footer>
 
   <div class="modal-overlay" id="announcementModal" onclick="if(event.target===this)closeAnnouncementModal()">
     <div class="modal announcement-modal" role="dialog" aria-modal="true" aria-labelledby="announcementModalTitle">
