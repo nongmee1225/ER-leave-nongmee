@@ -18,6 +18,8 @@ const checks = [
   ['announcement reader modal', html.includes('id="announcementModal"') && html.includes('openAnnouncementModal()')],
   ['announcement admin editor', html.includes('id="announcementAdminContent"') && html.includes("openPinModal('updateAnnouncement')")],
   ['home screen app metadata', html.includes('viewport-fit=cover') && html.includes('apple-mobile-web-app-capable') && html.includes('id="appManifestLink"') && html.includes('id="appTouchIcon"')],
+  ['single HTML document only', (html.match(/<!DOCTYPE html>/gi) || []).length === 1 && (html.match(/<html\b/gi) || []).length === 1 && (html.match(/<\/html>/gi) || []).length === 1],
+  ['developer credit footer', html.includes('class="app-footer"') && html.includes('พัฒนาโดย กภ.ภัทรลักษณ์ อิ่นคำ &copy; 2026')],
   ['install app UI removed', !html.includes('id="installAppButton"') && !html.includes('id="installModal"') && !html.includes('function openInstallModal()')],
   ['system center backend', code.includes('function getSystemCenterSettings(') && code.includes('function updateSystemCenterSettings(')],
   ['leave type config schema', code.includes('function ensureLeaveTypeConfigSchema_(') && code.includes('function saveLeaveTypeConfig(')],
